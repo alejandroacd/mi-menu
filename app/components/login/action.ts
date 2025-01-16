@@ -21,11 +21,17 @@ export const submitForm = async (
       }
     }
 
-    const { email, password } = form
+    const { email, password, name, lastName } = form
 
     const { data: userData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      options:{
+        data: {
+          name,
+          lastName
+        }
+      }
     });
 
     if (signUpError) {
@@ -44,6 +50,7 @@ export const submitForm = async (
     }
     return {
       success: true,
+      data: userData,
       message: "Check your email for the confirmation link",
     };
 
@@ -81,13 +88,15 @@ export const submitForm = async (
       message: "User not found",
     };
   }
-
   return {
     success: true,
     message: "Login successful",
     user: {
       id: data.user.id,
       email: data.user.email,
+      name: data.user.user_metadata.name,
+      lastName: data.user.user_metadata.lastName,
+      isVerified: data.user.user_metadata.email_verified
     },
   };
 }

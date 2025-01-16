@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react"
 import { createClient } from '@/utils/supabase/client'
-
+import { AuthError } from "@supabase/supabase-js"
+import { Session } from "@supabase/supabase-js"
 export const useClientSession = () => {
-    const [session, setSession] = useState(null)
-    const [sessionError,  setSessionError] = useState(null)
+    const [session, setSession] = useState<Session | null>(null)
+    const [sessionError,  setSessionError] = useState<AuthError | null>(null)
     const supabase = createClient()
 
     useEffect(() => {
@@ -20,6 +21,11 @@ export const useClientSession = () => {
         }
 
         getClientSession()
+
+        return () => {
+            setSession(null)
+            setSessionError(null)
+        }
     }, [])
     
     return {

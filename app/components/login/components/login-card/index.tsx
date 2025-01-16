@@ -27,7 +27,7 @@ export const AuthCard = () => {
     }
 
     return (
-        <Card className='z-2 relative dark ' >
+        <Card className='z-2 relative' >
             {/* login card header */}
             <LoginCardHeader 
              title={isLogin ? 'Iniciá sesión :)' : 'Regístrate'}

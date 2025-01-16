@@ -26,7 +26,7 @@ export const LogoutButton = ({ logoutTitle, logoutDescription, confirmText, canc
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="w-fit mr-auto border-slate-500" variant="outline">
+                <Button className="w-fit ml-auto" variant="ghost">
                     <LogOut />
                 </Button>
             </DialogTrigger>
