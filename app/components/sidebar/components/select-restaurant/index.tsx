@@ -14,7 +14,7 @@ export default function SelectRestaurant({ restaurants }: { restaurants: Restaur
     const { activeRestaurant, setActiveRestaurant } = useActiveRestaurantStore()
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild className='border '>
+            <DropdownMenuTrigger asChild className='border'>
                 <Button variant="ghost">
                     {activeRestaurant ? (
                         <div className="flex items-center">

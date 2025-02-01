@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react"
 import { lazy, Suspense } from "react"
 import { SpinnerLoader } from "@/app/components/spinner-loader"
 const CreateRestaurantForm = lazy(() => import("@/app/components/forms/create-restaurant"))
-export const CreateRestaurantButton = ({title}: {title:string}) => {
+export default function CreateRestaurantButton  ({title}: {title:string})  {
     return (
         <Dialog>
         <DialogTrigger asChild>
@@ -16,7 +16,6 @@ export const CreateRestaurantButton = ({title}: {title:string}) => {
         <DialogContent className="sm:max-w-[600px]  max-h-[90vh] overflow-hidden">
             <DialogHeader>
                 <DialogTitle>
-
                 </DialogTitle>
                 <DialogDescription>
                 </DialogDescription>
@@ -24,7 +23,7 @@ export const CreateRestaurantButton = ({title}: {title:string}) => {
             <Suspense fallback={<div className="flex justify-center my-12 items-center">
                 <SpinnerLoader />
             </div>}>
-            <CreateRestaurantForm />
+            <CreateRestaurantForm isEdit={false} closeDialog={() => {}} />
             </Suspense>
         </DialogContent>
     </Dialog>

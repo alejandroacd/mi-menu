@@ -53,9 +53,7 @@ export const AuthCard = () => {
                 setName={setName}
                 setLastName={setLastName}
             />
-            <p>
-                
-            </p>
+        
             {/* buttons */}
             <Buttons isLogin={isLogin} toggleAuthMode={toggleAuthMode} />
         </Card>

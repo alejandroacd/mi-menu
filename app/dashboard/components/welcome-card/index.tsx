@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react"
-const CreateRestaurantForm = lazy(() => import("@/app/components/forms/create-restaurant"))
+import { SpinnerLoader } from "@/app/components/spinner-loader"
 import {
     UtensilsCrossed,
     MenuIcon,
@@ -15,11 +15,10 @@ import {
     CardHeader,
     CardTitle
 } from "@/components/ui/card"
-import { CreateRestaurantButton } from "./CreateRestaurantButton"
-
-export function WelcomeCard() {
+const CreateRestaurantButton = lazy(() => import("@/app/dashboard/components/welcome-card/CreateRestaurantButton"))
+export default async function WelcomeCard() {
     return (
-        <Card className="mb-8 lg:w-[500px] mx-auto fade-in backdrop-blur-sm shadow-xl z-10">
+        <Card className="w-full mb-12 lg:mb-0 ml-auto fade-in backdrop-blur-sm shadow-xl z-10">
             <CardHeader className="space-y-5">
                 <CardTitle className="text-3xl  text-center">Empezamos?</CardTitle>
                 <CardDescription className="text-center ">Crea tu obra maestra culinaria en 5 sencillos pasos</CardDescription>
@@ -49,7 +48,9 @@ export function WelcomeCard() {
                 </ol>
             </CardContent>
             <CardFooter className="justify-center">
-                <CreateRestaurantButton title="Creá un negocio!" />
+                <Suspense fallback={<SpinnerLoader />}>
+                    <CreateRestaurantButton title="Creá un negocio!" />
+                </Suspense>
             </CardFooter>
         </Card>
 

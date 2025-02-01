@@ -1,17 +1,27 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Restaurant } from "@/types";
+import { Restaurant, MenuItem } from "@/types";
 
 interface RestaurantStore {
   activeRestaurant: Restaurant | null;
+  menuItems: MenuItem[];
   setActiveRestaurant: (restaurant: Restaurant | null) => void;
+  categories: string[];
+
 }
 
 export const useActiveRestaurantStore = create<RestaurantStore>(
   persist(
     (set) => ({
       activeRestaurant: null,
-      setActiveRestaurant: (restaurant: Restaurant) => set({ activeRestaurant: restaurant }),
+      menuItems: [],
+      categories: [],
+      setActiveRestaurant: (restaurant: Restaurant | null) =>
+        set((state: any) => ({
+          activeRestaurant: restaurant,
+          menuItems: restaurant ? restaurant.menu_items : [], // Update menuItems based on activeRestaurant
+          categories: Array.from(new Set(restaurant?.menu_items?.map((item: MenuItem) => item.category)))
+        })),
     }),
     {
       name: 'restaurant-storage', // Key to store in localStorage

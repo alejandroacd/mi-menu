@@ -8,12 +8,29 @@ export interface UserSession  {
     isVerified: boolean;
 }
 
+export interface MenuItem {
+    id?: string
+    name: string
+    description: string
+    price: number
+    image: string
+    likes: number
+    category: string
+    restrictions: string[]
+}
+
 export interface Restaurant {
     id: string;
     name: string;
-    avatar?: string 
+    avatar?: string | undefined;
     description: string;
     openHours?: {
+        day: string | undefined | string;
+        isOpen: boolean | undefined | string;
+        openTime: string | undefined | string;
+        closeTime: string | undefined | string;
+    }[];
+    open_hours?: {
         day: string | undefined | string;
         isOpen: boolean | undefined | string;
         openTime: string | undefined | string;
@@ -27,4 +44,5 @@ export interface Restaurant {
     twitter: string;
     url: string
     user_id: string
+    menu_items: MenuItem[]
 }

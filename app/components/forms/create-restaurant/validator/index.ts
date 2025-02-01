@@ -1,11 +1,12 @@
 import { z } from "zod"
 
 export const restaurantSchema = z.object({
+  id: z.string().optional(),
     avatar: z.string().optional(),
     name: z.string().min(2, {
       message: 'El nombre debe tener al menos 2 caracteres.',
     }),
-    description: z.string().optional(),
+    description: z.string().optional().nullable(),
     openHours: z.array(z.object({
       day: z.string(),
       isOpen: z.boolean(),
@@ -26,5 +27,7 @@ export const restaurantSchema = z.object({
     twitter: z.string().optional(),
     user_id: z.union([z.number(), z.string()]).optional(), 
     url: z.string().nonempty({ message: 'La URL es requerida.' }),
+    
+
   })
   

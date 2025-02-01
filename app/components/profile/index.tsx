@@ -1,14 +1,6 @@
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Suspense, lazy } from "react"
+import { SpinnerLoader } from "../spinner-loader"
+import { Card } from "@/components/ui/card"
 import {
   Tabs,
   TabsContent,
@@ -16,61 +8,33 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs"
 import { Restaurant } from "@/types"
-import { RestaurantMenu } from "../menu"
+import ProfileHeader from "./profile-header"
+import ProfileInfo from "./profile-info"
+const RestaurantMenu = lazy(() => import("@/app/components/menu"))
 
-export  function Profile({activeRestaurant}: {activeRestaurant: Restaurant | null}) {
+export function Profile({activeRestaurant}: {activeRestaurant: Restaurant}) {
   return (
-    <Tabs defaultValue="account" className="lg:w-1/2 mx-auto">
+    <Tabs defaultValue="menu" className="lg:w-5/6 mx-auto">
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="account">Account</TabsTrigger>
-        <TabsTrigger value="password">Password</TabsTrigger>
+        {/* TABS OPTIONS!! */}
+        <TabsTrigger value="menu">Menú</TabsTrigger>
+        <TabsTrigger value="account">Información</TabsTrigger>
       </TabsList>
+
+      {/* -----------------------------------------------------*/}
+      <ProfileHeader activeRestaurant={activeRestaurant} />
       <TabsContent value="account">
-        <Card className="min-h-[500px]">
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Make changes to your account here. Click save when you're done.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue="Pedro Duarte" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" defaultValue="@peduarte" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save changes</Button>
-          </CardFooter>
-        </Card>
+       <ProfileInfo
+       restaurant={activeRestaurant} />
       </TabsContent>
-      <TabsContent value="password">
-        <RestaurantMenu />
-        {/*<Card>
-          <CardHeader>
-            <CardTitle>Password</CardTitle>
-            <CardDescription>
-              Change your password here. After saving, you'll be logged out.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="space-y-1">
-              <Label htmlFor="current">Current password</Label>
-              <Input id="current" type="password" />
-            </div>
-            <div className="space-y-1">
-              <Label htmlFor="new">New password</Label>
-              <Input id="new" type="password" />
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Button>Save password</Button>
-          </CardFooter>
-  </Card>*/}
+      <TabsContent value="menu">
+        <Card className="p-2 lg:p-12">
+          <Suspense fallback={<div className="flex justify-center h-screen items-center">
+            <SpinnerLoader />
+          </div>}>
+            <RestaurantMenu />
+          </Suspense>
+        </Card>
       </TabsContent>
     </Tabs>
   )

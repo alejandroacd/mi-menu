@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 
 export const useRestaurantCreation = () => {
-const [isFinished, setIsFinished ] = useState(true)
+const [isFinished, setIsFinished ] = useState(false)
 
     useEffect(() => {
 

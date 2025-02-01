@@ -8,16 +8,15 @@ export function SwitchMode() {
   const { theme, setTheme } = useTheme();
 
   const handleThemeChange = (isDark: boolean) => {
-    setTheme(isDark ? "dark" : "light");
+    setTheme(isDark ? "light" : "dark");
   };
-
   return (
     <div className="flex items-center mx-5">
       <SunMoon className={`mr-2`} />
       <Switch
         id="theme-toggle"
         checked={theme === "dark"}
-        onCheckedChange={handleThemeChange}
+        onCheckedChange={() => handleThemeChange(theme === "dark")}
         aria-label="Toggle theme"
       />
     </div>

@@ -8,7 +8,7 @@ import {
     FormItem,
     FormMessage
 } from '@/components/ui/form'
-export function BasicInputs({ form }: any) {
+export function BasicInputs({ form, isEdit }: {form: any, isEdit?: boolean}) {
     return (
         <>
             {inputs.map((input, index) => 

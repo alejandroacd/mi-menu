@@ -12,7 +12,7 @@ export function ThemeProvider({
   ...props
 }: React.ComponentProps<typeof NextThemesProvider>) {
 
-{/*  const [mounted, setMounted] = useState(false);
+/*  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -20,6 +20,6 @@ export function ThemeProvider({
 
   if (!mounted) {
     return <>{children}</>; 
-  } */}
+  } */
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>
 }

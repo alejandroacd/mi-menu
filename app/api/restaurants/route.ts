@@ -6,7 +6,6 @@ import { revalidateTag } from "next/cache";
 export async function POST(req: NextRequest) {
     const supabase = await createClient();
     const request = await req.json();
-    console.log(request)
     const { avatar, name, address, phone, email, description, user_id, facebook, open_hours, instagram, twitter, url } = request;
 
     const newRestaurant = {
@@ -55,8 +54,50 @@ export const GET = async (req: NextRequest) => {
     if (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
-   
+
     if (data) revalidateTag("restaurants");
 
     return NextResponse.json({ data });
+}
+
+
+export async function PUT(req: NextRequest) {
+    const supabase = await createClient();
+    const request = await req.json();
+    const { id, avatar, name, address, phone, email, description, user_id, facebook, open_hours, instagram, twitter, url } = request;
+
+    if (!id) {
+        return NextResponse.json({ error: 'Restaurant ID is required' }, { status: 400 });
+    }
+
+    const updatedRestaurant = {
+        avatar,
+        name,
+        address,
+        phone,
+        email,
+        description,
+        user_id,
+        facebook,
+        open_hours,
+        instagram,
+        twitter,
+        url
+    };
+
+    const { data, error } = await supabase
+        .from('restaurants')
+        .update(updatedRestaurant)
+        .eq('id', id)
+        .select('*');
+
+    if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    // Invalidate the cache for the "restaurants" tag to trigger re-fetch
+    revalidateTag("restaurants");
+
+    // Return the updated restaurant data with a status of 200 (OK)
+    return NextResponse.json({ data }, { status: 200 });
 }

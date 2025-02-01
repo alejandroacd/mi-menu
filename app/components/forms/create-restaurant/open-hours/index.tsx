@@ -7,13 +7,14 @@ import {
     FormItem
 } from '@/components/ui/form'
 
-export function OpenHours({ fields, form, daysOfWeek }: any) {
+export function OpenHours({ fields, form, daysOfWeek, isEdit }: any) {
+    console.log(fields)
     return (
         <div className=''>
             <Label className='text-sm font-bold'>Horario de Apertura</Label>
             <div className="grid gap-2 lg:gap-4 mt-2 ">
-                {fields?.map((field: any, index: number) => (
-                    <div key={field.id} className="flex items-center  justify-between space-x-1  overflow-x-hidden lg:space-x-5 ">
+                {fields?.map((day: any, index: number) => (
+                    <div key={day.id || index} className="flex items-center justify-between space-x-1  overflow-x-hidden lg:space-x-5 ">
                         <FormField
                             control={form.control}
                             name={`openHours.${index}.isOpen`}

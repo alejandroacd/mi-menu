@@ -1,22 +1,22 @@
 'use client'
 import { useRef } from 'react'
 import { Camera, X } from 'lucide-react'
-
+import { useActiveRestaurantStore } from '@/utils/zustand/activeRestaurantStore'
 interface SelectRestaurantAvatarProps {
-    avatar: File | null | string
+    avatar: File | null | string | undefined
     handleAvatarChange: (event: React.ChangeEvent<HTMLInputElement>) => void
     removeAvatar: () => void
+    isEdit?: boolean
 }
-export const SelectRestaurantAvatar = ({ avatar, handleAvatarChange, removeAvatar }: SelectRestaurantAvatarProps) => {
-
+export const SelectRestaurantAvatar = ({ avatar, handleAvatarChange, removeAvatar, isEdit}: SelectRestaurantAvatarProps) => {
+    const activeRestaurant = useActiveRestaurantStore(state => state.activeRestaurant) 
     const fileInputRef = useRef<HTMLInputElement>(null)
-
     return (
         <div className="flex flex-col items-center justify-center" >
             <div className="relative">
                 <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center border-4 border-primary">
-                    {avatar ? (
-                        <img src={URL.createObjectURL(avatar as File)} alt="Restaurant avatar" className="w-full h-full object-cover" />
+                    {avatar || isEdit ? (
+                        <img src={isEdit && !avatar ? activeRestaurant?.avatar : URL.createObjectURL(avatar as File)} alt="Restaurant avatar" className="w-full h-full object-cover" />
                     ) : (
                         <Camera className="w-12 h-12 text-gray-400" />
                     )}

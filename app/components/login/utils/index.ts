@@ -9,16 +9,16 @@ export const onSubmit = async (form: AuthForm, isLogin: boolean, router: any, se
         const response = await submitForm(form, isLogin)
         if (response.error) {
             setServerError(response.message)
-        } else {
+            setLoading(false)
+        }
+        else {
             if (isLogin) router.push('/dashboard')
             else router.push('/confirm')
         }
     }
     catch (error) {
-        console.error('Error submitting form:', error)
-    }
-    finally {
         setLoading(false)
+        console.error('Error submitting form:', error)
     }
 }
 
